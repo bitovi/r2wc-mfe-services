@@ -1,10 +1,13 @@
+import type { ServicesProps } from "@scenes/Services";
+import type { GetServerSideProps } from "next";
+
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import Services from "@scenes/Services";
 
-const inter = Inter({ subsets: ["latin"] });
+import Services, { getServerData } from "@scenes/Services";
 
-export default function Home() {
+import { getServices } from "../services/offered-services";
+
+export default function Home(props: ServicesProps) {
   return (
     <>
       <Head>
@@ -12,7 +15,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="https://bitovi.com/favicon.ico" />
       </Head>
-      <Services />
+      <Services {...props} />
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<ServicesProps> = async (
+  ctx
+) => {
+  return getServerData(ctx);
+};

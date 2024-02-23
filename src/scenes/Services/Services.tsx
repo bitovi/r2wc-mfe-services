@@ -1,4 +1,9 @@
 import type { FC, CSSProperties } from "react";
+import {
+  getServices,
+  type OfferedServices,
+} from "../../services/offered-services";
+import type { GetServerSideProps } from "next";
 
 const serviceListItemStyles: Record<string, CSSProperties | undefined> = {
   card: {
@@ -27,11 +32,7 @@ const serviceListItemStyles: Record<string, CSSProperties | undefined> = {
   },
 };
 
-interface ServiceListItemProps {
-  title: string;
-  src: string;
-  href: string;
-}
+interface ServiceListItemProps extends OfferedServices {}
 
 const ServiceListItem: FC<ServiceListItemProps> = ({ title, src, href }) => {
   return (
@@ -84,38 +85,20 @@ const servicesStyles: Record<string, CSSProperties | undefined> = {
   },
 };
 
-const Services: FC = () => {
+export interface ServicesProps {
+  services: OfferedServices[];
+}
+
+const Services: FC<ServicesProps> = ({ services }) => {
   return (
     <section style={servicesStyles.section}>
       <h2 style={servicesStyles.title}>
         We offer consulting, training, strategy, and staff augmentation.
       </h2>
       <ul style={servicesStyles.serviceList}>
-        <ServiceListItem
-          href="#"
-          title="Project Management"
-          src="https://www.bitovi.com/hubfs/limbo-generated/imgs/vectors/illustration-red-shirt-presentation-whiteboard-on-circles.png"
-        />
-        <ServiceListItem
-          href="#"
-          title="Product Design"
-          src="https://www.bitovi.com/hubfs/limbo-generated/imgs/vectors/illustration-3-monitor-screens-on-circles.png"
-        />
-        <ServiceListItem
-          href="#"
-          title="Frontend Engineering"
-          src="https://www.bitovi.com/hubfs/limbo-generated/imgs/vectors/illustration-frontend-dev-on-circles.png"
-        />
-        <ServiceListItem
-          href="#"
-          title="Backend Engineering"
-          src="https://www.bitovi.com/hubfs/limbo-generated/imgs/vectors/node-hero-image.svg"
-        />
-        <ServiceListItem
-          href="#"
-          title="DevOps Engineering"
-          src="https://www.bitovi.com/hubfs/limbo-generated/imgs/vectors/illustration-devops-blue-red-arrows-around-gears-on-circles.png"
-        />
+        {services.map((service) => {
+          return <ServiceListItem key={service.title} {...service} />;
+        })}
       </ul>
       <a style={servicesStyles.seeAllLink}>See all services</a>
     </section>
@@ -123,3 +106,9 @@ const Services: FC = () => {
 };
 
 export default Services;
+
+export const getServerData: GetServerSideProps<ServicesProps> = async () => {
+  const services = await getServices();
+
+  return { props: { services } };
+};
