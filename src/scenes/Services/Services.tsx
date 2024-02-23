@@ -1,5 +1,9 @@
 import type { FC, CSSProperties } from "react";
-import type { OfferedServices } from "../../services/offered-services";
+import {
+  getServices,
+  type OfferedServices,
+} from "../../services/offered-services";
+import type { GetServerSideProps } from "next";
 
 const serviceListItemStyles: Record<string, CSSProperties | undefined> = {
   card: {
@@ -102,3 +106,9 @@ const Services: FC<ServicesProps> = ({ services }) => {
 };
 
 export default Services;
+
+export const getServerData: GetServerSideProps<ServicesProps> = async () => {
+  const services = await getServices();
+
+  return { props: { services } };
+};

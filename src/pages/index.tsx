@@ -3,7 +3,7 @@ import type { GetServerSideProps } from "next";
 
 import Head from "next/head";
 
-import Services from "@scenes/Services";
+import Services, { getServerData } from "@scenes/Services";
 
 import { getServices } from "../services/offered-services";
 
@@ -20,10 +20,8 @@ export default function Home(props: ServicesProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  ServicesProps
-> = async () => {
-  const services = await getServices();
-
-  return { props: { services } };
+export const getServerSideProps: GetServerSideProps<ServicesProps> = async (
+  ctx
+) => {
+  return getServerData(ctx);
 };
