@@ -11,6 +11,7 @@ async function build() {
     defineConfig({
       plugins: [react()],
       build: {
+        sourcemap: true,
         lib: {
           entry: path.resolve(
             __dirname,
