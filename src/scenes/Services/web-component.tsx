@@ -35,7 +35,6 @@ const useServices = (): ServiceFetchStates => {
 
 const ServicesWebComponentWrapper: FC = () => {
   const { services, isLoading, error } = useServices();
-  console.log({ services, isLoading, error });
 
   if (isLoading) {
     return <div>Loading</div>;
