@@ -21,11 +21,11 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5",
-    "vite": "^5.0.11"
+    "vite": "^8.1.0"
   }
 }
